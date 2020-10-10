@@ -23,7 +23,7 @@ type LogoutRequest struct {
 }
 
 func NewLogoutRequest() *LogoutRequest {
-	responseId := util.ID()
+	responseID := util.ID()
 	issueInstant := time.Now().UTC().Format(time.RFC3339)
 	notOnOrAfter := time.Now().Add(time.Minute * 10).UTC().Format(time.RFC3339)
 	request := &LogoutRequest{
@@ -31,7 +31,7 @@ func NewLogoutRequest() *LogoutRequest {
 			Local: "samlp:LogoutRequest",
 		},
 		XMLNS:        "urn:oasis:names:tc:SAML:2.0:protocol",
-		ID:           responseId,
+		ID:           responseID,
 		Version:      "2.0",
 		IssueInstant: issueInstant,
 		NotOnOrAfter: notOnOrAfter,
@@ -41,7 +41,7 @@ func NewLogoutRequest() *LogoutRequest {
 				Local: "saml:Issuer",
 			},
 			SAML: "urn:oasis:names:tc:SAML:2.0:assertion",
-			Url:  "",
+			URL:  "",
 		},
 		Signature: &Signature{
 			XMLName: xml.Name{
@@ -68,7 +68,7 @@ func NewLogoutRequest() *LogoutRequest {
 					XMLName: xml.Name{
 						Local: "ds:Reference",
 					},
-					URI: "#" + responseId,
+					URI: "#" + responseID,
 					Transforms: Transforms{
 						XMLName: xml.Name{
 							Local: "ds:Transforms",
@@ -143,16 +143,16 @@ func (r *LogoutRequest) String() (string, error) {
 	return string(x), nil
 }
 
-func (r *LogoutRequest) SignedXml(idpPrivateKey *rsa.PrivateKey) (string, error) {
+func (r *LogoutRequest) SignedXML(idpPrivateKey *rsa.PrivateKey) (string, error) {
 	xmlStr, err := r.String()
 	if err != nil {
 		return "", err
 	}
-	signedXml, err := util.Sign(xmlStr, idpPrivateKey)
+	signedXML, err := util.Sign(xmlStr, idpPrivateKey)
 	if err != nil {
 		return "", err
 	}
-	return signedXml, nil
+	return signedXML, nil
 }
 
 func (a *LogoutRequest) Validate() error {

@@ -7,8 +7,8 @@ import (
 )
 
 func NewResponse() *Response {
-	responseId := util.ID()
-	assertionId := util.ID()
+	responseID := util.ID()
+	assertionID := util.ID()
 	issueInstant := time.Now().UTC().Format(time.RFC3339)
 	return &Response{
 		XMLName: xml.Name{
@@ -16,7 +16,7 @@ func NewResponse() *Response {
 		},
 		SAMLP:        "urn:oasis:names:tc:SAML:2.0:protocol",
 		SAML:         "urn:oasis:names:tc:SAML:2.0:assertion",
-		ID:           responseId,
+		ID:           responseID,
 		Version:      "2.0",
 		IssueInstant: issueInstant,
 		Issuer: Issuer{
@@ -43,7 +43,7 @@ func NewResponse() *Response {
 			XS:           "http://www.w3.org/2001/XMLSchema",
 			SAML:         "urn:oasis:names:tc:SAML:2.0:assertion",
 			Version:      "2.0",
-			ID:           assertionId,
+			ID:           assertionID,
 			IssueInstant: issueInstant,
 			Issuer: Issuer{
 				XMLName: xml.Name{
@@ -76,7 +76,7 @@ func NewResponse() *Response {
 						XMLName: xml.Name{
 							Local: "ds:Reference",
 						},
-						URI: "#" + assertionId,
+						URI: "#" + assertionID,
 						Transforms: Transforms{
 							XMLName: xml.Name{
 								Local: "ds:Transforms",
@@ -238,8 +238,8 @@ func (r *Response) SetIdpCertificate(certPem string) {
 }
 
 func (r *Response) SetIssuer(issuer string) {
-	r.Issuer.Url = issuer
-	r.Assertion.Issuer.Url = issuer
+	r.Issuer.URL = issuer
+	r.Assertion.Issuer.URL = issuer
 }
 
 func (r *Response) SetDestination(destination string) {
@@ -247,7 +247,7 @@ func (r *Response) SetDestination(destination string) {
 	r.Assertion.Subject.SubjectConfirmation.SubjectConfirmationData.Recipient = destination
 }
 
-func (r *Response) SetNameId(format string, value string) {
+func (r *Response) SetNameID(format string, value string) {
 	r.Assertion.Subject.NameID.Format = format
 	r.Assertion.Subject.NameID.Value = value
 }
@@ -269,14 +269,14 @@ func (r *Response) SetDigestAlgorithm(alg string) {
 	r.Assertion.Signature.SignedInfo.SamlsigReference.DigestMethod.Algorithm = alg
 }
 
-func (r *Response) SignedXml(idpPrivateKey interface{}) (string, error) {
+func (r *Response) SignedXML(idpPrivateKey interface{}) (string, error) {
 	xmlStr, err := r.String()
 	if err != nil {
 		return "", err
 	}
-	signedXml, err := util.Sign(xmlStr, idpPrivateKey)
+	signedXML, err := util.Sign(xmlStr, idpPrivateKey)
 	if err != nil {
 		return "", err
 	}
-	return signedXml, nil
+	return signedXML, nil
 }

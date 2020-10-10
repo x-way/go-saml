@@ -1,18 +1,18 @@
 package saml
 
 const (
-	NameIdFormatPersistent      = "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent"
-	NameIdFormatTransient       = "urn:oasis:names:tc:SAML:2.0:nameid-format:transient"
-	NameIdFormatEmailAddress    = "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"
-	NameIdFormatUnspecified     = "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"
-	NameIdFormatX509SubjectName = "urn:oasis:names:tc:SAML:1.1:nameid-format:x509SubjectName"
+	NameIDFormatPersistent      = "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent"
+	NameIDFormatTransient       = "urn:oasis:names:tc:SAML:2.0:nameid-format:transient"
+	NameIDFormatEmailAddress    = "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"
+	NameIDFormatUnspecified     = "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"
+	NameIDFormatX509SubjectName = "urn:oasis:names:tc:SAML:1.1:nameid-format:x509SubjectName"
 
 	HTTPPostBinding     = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
 	HTTPRedirectBinding = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
 
 	AttributeFormatUnspecified = "urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified"
 	AttributeFormatBasic       = "urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
-	AttributeFormatUri         = "urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+	AttributeFormatURI         = "urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
 )
 
 // Supported signature algorithms for responses
@@ -46,7 +46,7 @@ type IdentityProvider struct {
 	NameIdentifierFormat string
 	ACSLocation          string
 	ACSBinging           string
-	LogoutUrl            string
+	LogoutURL            string
 	RelayState           string
 	SessionIndex         string
 	SingleSignOnService  []MetadataBinding

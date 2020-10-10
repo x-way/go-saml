@@ -29,10 +29,10 @@ idp := saml.IdentityProvider{
     SPCert:               "<SPCert PEM Format>",
     NameIdentifier:       "john@idp.com",
     NameIdentifierFormat: saml.AttributeFormatUnspecified,
-    ACSLocation:          "https://service-provider-acs.com", //Service Provider Login Url
+    ACSLocation:          "https://service-provider-acs.com", //Service Provider Login URL
     ACSBinging:           saml.HTTPPostBinding,
     SessionIndex:         "1ac5bc03-06a1-413d-8542-e7a7e7d9e9f2",
-    LogoutUrl:            "https://service-provider-acs.com/logout" //Service Provider Logout Url
+    LogoutURL:            "https://service-provider-acs.com/logout" //Service Provider Logout URL
 }
 
 //Add Attributes
@@ -59,7 +59,7 @@ if signedXMLErr != nil {
 }
 
 //Generate html content for Post
-html, err := idp.ResponseHtml(signedXML, "Response")
+html, err := idp.ResponseHTML(signedXML, "Response")
 if err !=nil {
   return err
 }
@@ -84,7 +84,7 @@ if signedXMLErr != nil {
 }
 
 //Generate html content for Post
-html, err := idp.ResponseHtml(signedXML, "LogoutResponse")
+html, err := idp.ResponseHTML(signedXML, "LogoutResponse")
 if err !=nil {
   return err
 }

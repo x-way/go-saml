@@ -17,8 +17,8 @@ func LoginResponseExample() {
 		IDPKey:               utitlity.GetIdpPrivateKey(),
 		SPCert:               utitlity.GetSpCertificate(),
 		NameIdentifier:       "john@idp.com",
-		NameIdentifierFormat: saml.NameIdFormatUnspecified,
-		ACSLocation:          "https://service-provider.com/", //Service Provider Login Url
+		NameIdentifierFormat: saml.NameIDFormatUnspecified,
+		ACSLocation:          "https://service-provider.com/", //Service Provider Login URL
 		ACSBinging:           saml.HTTPPostBinding,
 		SessionIndex:         "1ac5bc03-06a1-413d-8542-e7a7e7d9e9f2",
 	}
@@ -45,7 +45,7 @@ func LoginResponseExample() {
 	fmt.Println("------------------signedXML------------------\n", signedXML)
 
 	//Generate html content for Post
-	html, err := idp.ResponseHtml(signedXML, "Response")
+	html, err := idp.ResponseHTML(signedXML, "Response")
 	if err != nil {
 		fmt.Println("htmlErr", err)
 		return

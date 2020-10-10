@@ -29,7 +29,7 @@ type AuthnRequest struct {
 type Issuer struct {
 	XMLName xml.Name
 	SAML    string `xml:"xmlns:saml,attr,omitempty"`
-	Url     string `xml:",innerxml"`
+	URL     string `xml:",innerxml"`
 }
 
 type NameIDPolicy struct {
@@ -128,7 +128,7 @@ type EntityDescriptor struct {
 	DS       string `xml:"xmlns:ds,attr"`
 	XMLNS    string `xml:"xmlns,attr"`
 	MD       string `xml:"xmlns:md,attr"`
-	EntityId string `xml:"entityID,attr"`
+	EntityID string `xml:"entityID,attr"`
 
 	Extensions      Extensions      `xml:"Extensions"`
 	SPSSODescriptor SPSSODescriptor `xml:"SPSSODescriptor"`
@@ -139,7 +139,7 @@ type IDPEntityDescriptor struct {
 	DS               string           `xml:"xmlns:ds,attr"`
 	XMLNS            string           `xml:"xmlns,attr"`
 	ASSERTION        string           `xml:"xmlns:assertion,attr"`
-	EntityId         string           `xml:"entityID,attr"`
+	EntityID         string           `xml:"entityID,attr"`
 	IDPSSODescriptor IDPSSODescriptor `xml:"IDPSSODescriptor"`
 }
 

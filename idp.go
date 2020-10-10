@@ -29,25 +29,25 @@ func (idp *IdentityProvider) NewSignedLoginResponse() (string, *Reject) {
 	response.SetDigestAlgorithm(idp.digestAlgorithm())
 	response.SetIssuer(idp.Issuer)
 	response.SetDestination(idp.ACSLocation)
-	response.SetNameId(idp.NameIdentifierFormat, idp.NameIdentifier)
+	response.SetNameID(idp.NameIdentifierFormat, idp.NameIdentifier)
 	response.SetSessionIndex(idp.SessionIndex)
 	response.AddAudience(idp.Audiences)
 	response.AddAttributes(idp.Attributes)
 	if idp.samlRequestParam != nil {
 		response.SetInResponseTo(idp.samlRequestParam.AuthnRequest.ID)
 	}
-	signedXml, err := response.SignedXml(idp.idpPrivateKey)
+	signedXML, err := response.SignedXML(idp.idpPrivateKey)
 	if err != nil {
 		return "", &Reject{err, "SIGNED_XML_ERROR"}
 	}
-	return signedXml, nil
+	return signedXML, nil
 }
 
 func (idp *IdentityProvider) NewSignedLogoutResponse() (string, *Reject) {
 	//err := idp.validate()
 	response := lib.NewLogoutResponse()
-	response.Issuer.Url = idp.Issuer
-	response.Destination = idp.LogoutUrl
+	response.Issuer.URL = idp.Issuer
+	response.Destination = idp.LogoutURL
 	errReject := idp.parseIdpX509Certificate()
 	if errReject != nil {
 		return "", errReject
@@ -62,11 +62,11 @@ func (idp *IdentityProvider) NewSignedLogoutResponse() (string, *Reject) {
 	}
 	response.SetSignatureAlgorithm(idp.signatureAlgorithm())
 	response.SetDigestAlgorithm(idp.digestAlgorithm())
-	signedXml, err := response.SignedXml(idp.idpPrivateKey)
+	signedXML, err := response.SignedXML(idp.idpPrivateKey)
 	if err != nil {
 		return "", &Reject{err, "SIGNED_XML_ERROR"}
 	}
-	return signedXml, nil
+	return signedXML, nil
 }
 
 func (idp *IdentityProvider) MetaDataResponse() (string, *Reject) {
@@ -83,7 +83,7 @@ func (idp *IdentityProvider) MetaDataResponse() (string, *Reject) {
 	}
 
 	metadata := lib.GetIdpEntityDescriptor()
-	metadata.EntityId = idp.Issuer
+	metadata.EntityID = idp.Issuer
 	metadata.IDPSSODescriptor.SigningKeyDescriptor.KeyInfo.X509Data.X509Certificate.Cert = idpCert
 	if len(idp.SingleSignOnService) > 0 {
 		for i := 0; i < len(idp.SingleSignOnService); i++ {
@@ -172,11 +172,11 @@ func (idp *IdentityProvider) AuthnRequestTTL(duration time.Duration) {
 	lib.MaxIssueDelay = duration
 }
 
-func (idp *IdentityProvider) ResponseHtml(signedXML string, requestType string) (string, *Reject) {
+func (idp *IdentityProvider) ResponseHTML(signedXML string, requestType string) (string, *Reject) {
 	var b bytes.Buffer
 	location := idp.ACSLocation
 	if requestType == "LogoutResponse" {
-		location = idp.LogoutUrl
+		location = idp.LogoutURL
 	}
 	data := struct {
 		URL          string

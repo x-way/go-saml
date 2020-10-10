@@ -21,7 +21,7 @@ type LogoutResponse struct {
 }
 
 func NewLogoutResponse() *LogoutResponse {
-	responseId := util.ID()
+	responseID := util.ID()
 	issueInstant := time.Now().UTC().Format(time.RFC3339)
 	response := &LogoutResponse{
 		XMLName: xml.Name{
@@ -29,7 +29,7 @@ func NewLogoutResponse() *LogoutResponse {
 		},
 		XMLNSP:       "urn:oasis:names:tc:SAML:2.0:protocol",
 		XMLNSL:       "urn:oasis:names:tc:SAML:2.0:assertion",
-		ID:           responseId,
+		ID:           responseID,
 		Version:      "2.0",
 		IssueInstant: issueInstant,
 		Destination:  "",
@@ -64,7 +64,7 @@ func NewLogoutResponse() *LogoutResponse {
 					XMLName: xml.Name{
 						Local: "ds:Reference",
 					},
-					URI: "#" + responseId,
+					URI: "#" + responseID,
 					Transforms: Transforms{
 						XMLName: xml.Name{
 							Local: "ds:Transforms",
@@ -150,14 +150,14 @@ func (r *LogoutResponse) SetDigestAlgorithm(alg string) {
 	r.Signature.SignedInfo.SamlsigReference.DigestMethod.Algorithm = alg
 }
 
-func (r *LogoutResponse) SignedXml(idpPrivateKey interface{}) (string, error) {
+func (r *LogoutResponse) SignedXML(idpPrivateKey interface{}) (string, error) {
 	xmlStr, err := r.String()
 	if err != nil {
 		return "", err
 	}
-	signedXml, err := util.Sign(xmlStr, idpPrivateKey)
+	signedXML, err := util.Sign(xmlStr, idpPrivateKey)
 	if err != nil {
 		return "", err
 	}
-	return signedXml, nil
+	return signedXML, nil
 }
